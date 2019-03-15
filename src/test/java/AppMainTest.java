@@ -7,6 +7,7 @@ import entity.Worker;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -112,7 +113,6 @@ public class AppMainTest {
         workerDAO.deleteRecord(1);
         List<Worker> workers = workerDAO.displayRecords();
         assertEquals(5,workers.size());
-
     }
 
 
@@ -187,6 +187,15 @@ public class AppMainTest {
         workerDAO.createRecord();
         List<Worker> worker = workerDAO.getWorkersByAvailability(Availability.PARTTIME,3);
         assertEquals(1,worker.size());
+
+    }
+    @After
+
+    public void after() {
+
+        session.close();
+
+        sessionFactory.close();
 
     }
 }

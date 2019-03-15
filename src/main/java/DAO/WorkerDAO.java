@@ -218,7 +218,6 @@ public class WorkerDAO {
 
         String hql = "FROM Worker where availability = :paramName AND  department_id = :paramName1 ";
         Query query = sessionObj.createQuery(hql);
-
         query.setParameter("paramName", availability);
         query.setParameter("paramName1", dep_id);
         List<Worker> workers = query.list();
