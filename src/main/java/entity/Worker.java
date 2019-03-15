@@ -39,6 +39,7 @@ public class Worker implements Serializable{
                 ", fullName='" + fullName + '\'' +
                 ", age=" + age +
                 ", availability=" + availability +
+                ", department_id=" + department.getId() +
                 '}';
     }
 }

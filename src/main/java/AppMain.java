@@ -1,4 +1,3 @@
-
 import DAO.DepartmentDAO;
 import DAO.HibernateUtil;
 import DAO.WorkerDAO;
@@ -44,16 +43,23 @@ public class AppMain {
             }
         }
 
-        System.out.println("=========GET WORKERS BY DEPARTMENT========");
+       /* System.out.println("=========GET WORKERS BY DEPARTMENT========");
         System.out.println(WorkerDAO.getWorkersByDepartments(2));
         System.out.println("=========GET WORKERS BY DEPARTMENTAPI========");
-       WorkerDAO.getWorkersByDepartmentsAPI(2);
+       WorkerDAO.getWorkersByDepartmentsAPI(2);*/
 
         System.out.println("=========GET WORKERS BY AVAILABILITY========");
-        System.out.println(WorkerDAO.getWorkersByAvailability(Availability.PARTTIME));
+        System.out.println(WorkerDAO.getWorkersByAvailability(Availability.PARTTIME,3));
 
         System.out.println("=========GET WORKERS BY AVAILABILITYAPI========");
-        WorkerDAO.getWorkersByAvailabilityAPI(Availability.PARTTIME);
+        WorkerDAO.getWorkersByAvailabilityAPI(Availability.PARTTIME,3);
+
+        System.out.println("=========GET DEPARTMENTS BY STATUS========");
+        System.out.println(DepartmentDAO.getDepartmentsByStatus(true));
+
+        System.out.println("=========GET DEPARTMENTS BY STATUS API========");
+        DepartmentDAO.getDepartmentByStatusAPI(true);
+
 
         System.out.println("\n=======UPDATE RECORDS WORKER=======\n");
         int updateWorkerId = 1;

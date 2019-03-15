@@ -199,7 +199,7 @@ public class WorkerDAO {
     }
 
 
-    public static List<Worker> getWorkersByDepartments(int department_id) {
+    /*public static List<Worker> getWorkersByDepartments(int department_id) {
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         // Getting Transaction Object From Session Object
         sessionObj.beginTransaction();
@@ -210,32 +210,33 @@ public class WorkerDAO {
         query.setParameter("paramName", department_id);
         List<Worker> workers = query.list();
         return workers;
-    }
-    public static List<Worker> getWorkersByAvailability(Availability availability) {
+    }*/
+    public static List<Worker> getWorkersByAvailability(Availability availability,int dep_id) {
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         // Getting Transaction Object From Session Object
         sessionObj.beginTransaction();
 
-        String hql = "FROM Worker where availability = :paramName";
+        String hql = "FROM Worker where availability = :paramName AND  department_id = :paramName1 ";
         Query query = sessionObj.createQuery(hql);
 
         query.setParameter("paramName", availability);
+        query.setParameter("paramName1", dep_id);
         List<Worker> workers = query.list();
         return workers;
     }
-    public static void getWorkersByAvailabilityAPI(Availability availability) {
+    public static List getWorkersByAvailabilityAPI(Availability availability,int dep_id) {
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         // Getting Transaction Object From Session Object
         sessionObj.beginTransaction();
-        sessionObj.createCriteria(Worker.class).add(Restrictions.eq("availability", Availability.PARTTIME))
-                .list()
-                .forEach(System.out::println);
+        return sessionObj.createCriteria(Worker.class).add(Restrictions.eq("availability", availability))
+                .createCriteria("department").add(Restrictions.eq("id", dep_id))
+                .list();
 
 
     }
 
 
-    public static void getWorkersByDepartmentsAPI(int department_id) {
+  /*  public static void getWorkersByDepartmentsAPI(int department_id) {
         sessionObj = HibernateUtil.getSessionFactory().openSession();
         // Getting Transaction Object From Session Object
         sessionObj.beginTransaction();
@@ -244,5 +245,5 @@ public class WorkerDAO {
                .forEach(System.out::println);
 
 
-    }
+    }*/
 }

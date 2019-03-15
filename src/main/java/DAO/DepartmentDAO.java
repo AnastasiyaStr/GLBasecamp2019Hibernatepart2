@@ -1,12 +1,13 @@
 package DAO;
 
 
-
-import org.hibernate.Session;
-import java.util.*;
-
 import entity.Department;
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.ArrayList;
+import java.util.List;
 public class DepartmentDAO {
     static Session sessionObj;
     private static HibernateUtil HibernateUtil;
@@ -23,14 +24,18 @@ public class DepartmentDAO {
             sessionObj = HibernateUtil.getSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
-            for (int j = 1; j <= 4; j++) {
+            for (int j = 1; j <= 3; j++) {
                 departmentObj = new Department();
                 departmentObj.setId(j);
                 departmentObj.setName("Programming Department" + j);
                 departmentObj.setStatus(false);
                 sessionObj.save(departmentObj);
             }
-
+            departmentObj = new Department();
+            departmentObj.setId(4);
+            departmentObj.setName("Programming Department" + 4);
+            departmentObj.setStatus(true);
+            sessionObj.save(departmentObj);
             sessionObj.getTransaction().commit();
             System.out.println("\nSuccessfully Created  Records In The Database!\n");
         } catch (Exception sqlException) {
@@ -171,5 +176,27 @@ public class DepartmentDAO {
                 sessionObj.close();
             }
         }
+    }
+
+    public static List<Department> getDepartmentsByStatus(Boolean status) {
+        sessionObj = HibernateUtil.getSessionFactory().openSession();
+        // Getting Transaction Object From Session Object
+        sessionObj.beginTransaction();
+
+        String hql = "FROM Department where status = :paramName";
+        Query query = sessionObj.createQuery(hql);
+
+        query.setParameter("paramName", status);
+        List<Department> departments = query.list();
+        return departments;
+    }
+    public static List getDepartmentByStatusAPI(Boolean status) {
+        sessionObj = HibernateUtil.getSessionFactory().openSession();
+        // Getting Transaction Object From Session Object
+        sessionObj.beginTransaction();
+       return sessionObj.createCriteria(Department.class).add(Restrictions.eq("status", status))
+                .list();
+
+
     }
 }
